@@ -5,6 +5,6 @@ public abstract class Ticket {
     private Integer totaal;
 
     public abstract void evenTicketSplit();
-    get.inst
+    public abstract void unevenTicketSplit();
 
 }

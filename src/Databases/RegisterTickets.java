@@ -4,17 +4,17 @@ import PersonData.Person;
 
 import java.util.HashMap;
 
-public class DatabaseTickets extends DataTickets{
-    private static DatabaseTickets uniqueInstance;
+public class RegisterTickets extends DataTickets{
+    private static RegisterTickets uniqueInstance;
     private final HashMap<String, Integer> db;
 
-    private DatabaseTickets() {
+    private RegisterTickets() {
         this.db = new HashMap<String, Integer>() {
         };
     }
     public static DataTickets getInstance(){
         if(uniqueInstance==null){
-            uniqueInstance = new DatabaseTickets();
+            uniqueInstance = new RegisterTickets();
         }
         return uniqueInstance;
     }
