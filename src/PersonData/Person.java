@@ -2,7 +2,7 @@ package PersonData;
 
 public class Person {
     private String name;
-    private Integer schuld;
+    private double schuld;
 
     public String getName() {
         return name;
@@ -12,11 +12,11 @@ public class Person {
         this.name = name;
     }
 
-    public Integer getSchuld() {
+    public double getSchuld() {
         return schuld;
     }
 
-    public void setSchuld(Integer schuld) {
+    public void setSchuld(double schuld) {
         this.schuld = schuld;
     }
 }
