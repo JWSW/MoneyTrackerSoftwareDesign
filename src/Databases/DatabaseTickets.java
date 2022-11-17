@@ -1,25 +1,23 @@
 package Databases;
 
 import PersonData.Person;
-import PersonData.PersonNull;
 
 import java.util.HashMap;
 
-public class RegisterDP extends DataPersons{
-    private static RegisterDP uniqueInstance;
+public class DatabaseTickets extends DataTickets{
+    private static DatabaseTickets uniqueInstance;
     private final HashMap<String, Integer> db;
 
-    private RegisterDP() {
+    private DatabaseTickets() {
         this.db = new HashMap<String, Integer>() {
         };
     }
-    public static DataPersons getInstance(){
+    public static DataTickets getInstance(){
         if(uniqueInstance==null){
-            uniqueInstance = new RegisterDP();
+            uniqueInstance = new DatabaseTickets();
         }
         return uniqueInstance;
     }
-
     @Override
     public void addPerson(Person person) {
 
@@ -27,7 +25,6 @@ public class RegisterDP extends DataPersons{
 
     @Override
     public Integer getPerson(Person person) {
-        PersonNull nullPerson = new PersonNull();
-        return this.db.getOrDefault(person,nullPerson.getSchuld());
+        return null;
     }
 }
