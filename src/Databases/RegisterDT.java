@@ -5,16 +5,16 @@ import PersonData.Person;
 import java.util.HashMap;
 
 public class RegisterDT extends DataTickets{
-    private static RegisterDP uniqueInstance;
+    private static RegisterDT uniqueInstance;
     private final HashMap<String, Integer> db;
 
-    public RegisterDT() {
-        this.db = new HashMap<>() {
+    private RegisterDT() {
+        this.db = new HashMap<String, Integer>() {
         };
     }
-    public static DataPersons getInstance(){
+    public static DataTickets getInstance(){
         if(uniqueInstance==null){
-            uniqueInstance = new RegisterDP();
+            uniqueInstance = new RegisterDT();
         }
         return uniqueInstance;
     }

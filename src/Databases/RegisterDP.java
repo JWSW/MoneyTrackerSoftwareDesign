@@ -9,8 +9,8 @@ public class RegisterDP extends DataPersons{
     private static RegisterDP uniqueInstance;
     private final HashMap<String, Integer> db;
 
-    public RegisterDP() {
-        this.db = new HashMap<>() {
+    private RegisterDP() {
+        this.db = new HashMap<String, Integer>() {
         };
     }
     public static DataPersons getInstance(){
