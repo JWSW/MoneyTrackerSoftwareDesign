@@ -11,8 +11,8 @@ import javax.swing.*;
 
 public class RegistrationButtonPanel extends JPanel {
 
-    private JButton checkIn;
-    private JButton checkOut;
+    private JButton addTicket;
+    private JButton addPerson;
 
     // Get your controller in this private field
     private RegistrationController controller;
@@ -23,33 +23,34 @@ public class RegistrationButtonPanel extends JPanel {
     // Get your controller in this class via the constructor
     public RegistrationButtonPanel()
     {
-        JLabel label = new JLabel("Registration buttons");
-        this.checkIn = new JButton("Check In");
-        this.checkOut = new JButton("Check Out");
+        JLabel label = new JLabel("Chose an action");
+        this.addTicket = new JButton("Add ticket");
+        this.addPerson = new JButton("Add person");
 
         // Create your temporary employee here
 //        this.employee = your factory creating an employee
-        addCheckInButtonActionListener();
-        addCheckOutButtonActionListener();
+        addTicketButtonActionListener();
+        addPersonButtonActionListener();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(label);
-        this.add(this.checkIn);
-        this.add(this.checkOut);
+        this.add(this.addTicket);
+        this.add(this.addPerson);
     }
 
-    public void addCheckInButtonActionListener()
+    public void addTicketButtonActionListener()
     {
-        this.checkIn.addActionListener(listener ->
+        this.addTicket.addActionListener(listener ->
         {
             // Insert here your controller functionality
+//            controller.addTicket();
         });
     }
 
-    public void addCheckOutButtonActionListener()
+    public void addPersonButtonActionListener()
     {
-        this.checkOut.addActionListener(listener ->
+        this.addPerson.addActionListener(listener ->
         {
             // Insert here your controller functionality
         });

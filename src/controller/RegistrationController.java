@@ -1,13 +1,19 @@
 package controller;
 
 import Databases.DataPersons;
+import Tickets.Ticket;
 
-public class RegistrationController {
+public class RegistrationController implements Controller{
     private DataPersons db;
 
     public RegistrationController(DataPersons db)
     {
         this.db = db;
+    }
+
+    @Override
+    public void addTicket(Ticket ticket) {
+
     }
 
 //    @Override

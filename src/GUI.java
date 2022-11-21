@@ -27,7 +27,7 @@ public class GUI extends JFrame implements Observer{
 
         public GUI()
         {
-            super("Registration");
+            super("Options");
         }
 
         public void initialize()

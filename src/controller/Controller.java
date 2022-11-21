@@ -1,4 +1,7 @@
 package controller;
 
-public class Controller {
+import Tickets.Ticket;
+
+public interface Controller {
+    void addTicket(Ticket ticket);
 }

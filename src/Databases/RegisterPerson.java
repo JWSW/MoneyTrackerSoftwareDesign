@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class RegisterPerson extends DataPersons{
     private static RegisterPerson uniqueInstance;
-    private final HashMap<String, Double> db;
+    private HashMap<String, Double> db;
     private ArrayList<Observer> observerList = new ArrayList<>();
 
     private RegisterPerson() {
