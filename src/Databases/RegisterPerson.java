@@ -24,6 +24,9 @@ public class RegisterPerson extends DataPersons{
 
     @Override
     public void addPerson(Person person) {
+        for (Observer o: observerList){
+            o.update();
+        }
         db.put(person.getName(),person.getSchuld());
         System.out.println(db.keySet());
     }

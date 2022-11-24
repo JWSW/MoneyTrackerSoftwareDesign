@@ -3,8 +3,13 @@ Credits to Jens de Hoog.
  */
 
 import Databases.DataPersons;
+import Databases.DataTickets;
 import Databases.RegisterPerson;
+import Databases.RegisterTickets;
 import controller.RegistrationController;
+import observers.PersonObserver;
+
+import javax.xml.crypto.Data;
 
 public class Main
 {
@@ -22,12 +27,14 @@ public class Main
     public void run()
     {
         // Replace with your own objects
-        DataPersons timedb = RegisterPerson.getInstance();
-        RegistrationController register= new RegistrationController(timedb);
+        DataPersons personRegister = RegisterPerson.getInstance();
+        DataTickets ticketRegister = RegisterTickets.getInstance();
+        RegistrationController register= new RegistrationController();
 
+        personRegister.addObserver(new PersonObserver());
         GUI view = new GUI();
         view.initialize();
-        timedb.addObserver(view);
+
         //register.IetsDatIetsToevoegd();
 
         sleep(3000);
