@@ -17,12 +17,12 @@ public class OtherTicketFactory implements TicketFactory{
     }
 
     @Override
-    public Ticket addOther(String ticketName, String payerName, Double amount) {
+    public Ticket addOther(String ticketName, String payerName, Double amount, boolean isEven) {
         if(!dataPersons.getPersonList().containsKey(payerName)){
             Person person = new Person(payerName);
             dataPersons.addPerson(person);
         }
-        Ticket ticket = new OtherTicket(ticketName, payerName,amount);
+        Ticket ticket = new OtherTicket(ticketName, payerName,amount, isEven);
         dataTickets.addTicket(ticket);
         return ticket;
     }

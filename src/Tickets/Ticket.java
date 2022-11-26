@@ -37,6 +37,6 @@ public abstract class Ticket {
 
     @Override
     public String toString() {
-        return "a " + ticketName + " of " + amount + " paid by " + payerName;
+        return "A " + ticketName + " of " + amount + " paid by " + payerName;
     }
 }

@@ -23,7 +23,7 @@ public class PlaneTicketFactory implements TicketFactory{
     }
 
     @Override
-    public Ticket addOther(String ticketName, String payerName, Double amount) {
+    public Ticket addOther(String ticketName, String payerName, Double amount, boolean isEven) {
         return null;
     }
 }

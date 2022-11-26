@@ -5,8 +5,10 @@ import Tickets.OtherTicket;
 import Tickets.Ticket;
 import observers.Observer;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class RegisterTickets extends DataTickets{
     private static RegisterTickets uniqueInstance;
@@ -41,12 +43,19 @@ public class RegisterTickets extends DataTickets{
     }
 
     @Override
-    public Ticket getTicket(Person person) {
+    public Ticket getTicket(String name) {
+        /*
+        #G
+         */
         Double getal = 0.0;
-        for(double i:db.get(person.getName()).values()) {
+        for(double i:db.get(name).values()) {
             getal = i;
         }
-        Ticket ticket = new OtherTicket(db.get(person.getName()).keySet().toString(),person.getName(),getal);
+        String ticketName = null;
+        for(String i:db.get(name).keySet()) {
+            ticketName = i;
+        }
+        Ticket ticket = new OtherTicket(ticketName,name,getal, true);
         return ticket;
     }
 }

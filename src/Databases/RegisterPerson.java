@@ -43,7 +43,6 @@ public class RegisterPerson extends DataPersons{
     @Override
     public void changeValue(String name, Double value) {
         if(db.containsKey(name)){
-            System.out.println(name + " komt hier>\n" + db.get(name) + " wordt normaal gezien " + (db.get(name)+value));
             db.replace(name,db.get(name),(db.get(name)+value));
         }
     }

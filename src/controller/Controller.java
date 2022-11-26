@@ -1,7 +1,13 @@
 package controller;
 
+import Databases.DataPersons;
+import PersonData.Person;
 import Tickets.Ticket;
 
 public interface Controller {
-    void addTicket(Ticket ticket);
+    void addTicket(String ticketName, String payerName, Double amount, boolean isEven);
+    void addPerson(String name);
+    DataPersons getDBPerson();
+
+    void changeValue(String name, Double amount);
 }

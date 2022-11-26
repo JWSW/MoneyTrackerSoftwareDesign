@@ -30,11 +30,11 @@ public class Main
         // Replace with your own objects
         DataPersons dbPerson = RegisterPerson.getInstance();
         DataTickets dbTicket = RegisterTickets.getInstance();
-        RegistrationController register= new RegistrationController(dbPerson);
-        TicketFactory TaxiTicketFactory = TicketFactoryProvider.getTaxiTicket();
-        TicketFactory PlaneTicketFactory = TicketFactoryProvider.getPlaneTicket();
-        TicketFactory RestoTicketFactory = TicketFactoryProvider.getRestoTicket();
-        TicketFactory OtherTicketFactory = TicketFactoryProvider.getOtherTicket();
+        RegistrationController controller= new RegistrationController();
+        TicketFactory TaxiTicketFactory = TicketFactoryProvider.getTaxiTicketFactory();
+        TicketFactory PlaneTicketFactory = TicketFactoryProvider.getPlaneTicketFactory();
+        TicketFactory RestoTicketFactory = TicketFactoryProvider.getRestoTicketFactory();
+        TicketFactory OtherTicketFactory = TicketFactoryProvider.getOtherTicketFactory();
         GUI view = new GUI();
 
         dbPerson.addObserver(view);
@@ -61,6 +61,7 @@ public class Main
         System.out.println(dbPerson.getPerson(person2.getName()));
         System.out.println(dbPerson.getPerson(person3.getName()));
         System.out.println(dbPerson.getPerson(person4.getName()));
+        System.out.println(dbTicket.getTicket("Marie"));
 
         view.initialize();
         //register.IetsDatIetsToevoegd();
