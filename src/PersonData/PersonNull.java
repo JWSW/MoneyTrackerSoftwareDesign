@@ -4,7 +4,7 @@ public class PersonNull extends Person{
 
     public PersonNull()
     {
-        setName("None");
+        super("None");
         setSchuld(0);
     }
 }

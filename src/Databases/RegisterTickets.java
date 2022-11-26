@@ -3,6 +3,7 @@ package Databases;
 import PersonData.Person;
 import Tickets.OtherTicket;
 import Tickets.Ticket;
+import observers.Observer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ public class RegisterTickets extends DataTickets{
     private static RegisterTickets uniqueInstance;
     private HashMap<String,HashMap<String,Double>> db;
     private ArrayList<Ticket> ticketList;
+    private ArrayList<Observer> observerList = new ArrayList<>();
 
     private RegisterTickets() {
         this.db = new HashMap<String, HashMap<String,Double>>() {
@@ -22,6 +24,9 @@ public class RegisterTickets extends DataTickets{
         HashMap<String,Double> tmp = new HashMap<String,Double>();
         tmp.put(ticket.getTicketName(),ticket.getAmount());
         db.put(ticket.getPayerName(),tmp);
+        for (Observer o: observerList){
+            o.updateTicket();
+        }
     }
 
     public static DataTickets getInstance(){
@@ -29,6 +34,10 @@ public class RegisterTickets extends DataTickets{
             uniqueInstance = new RegisterTickets();
         }
         return uniqueInstance;
+    }
+    @Override
+    public void addObserver(Observer observer) {
+        observerList.add(observer);
     }
 
     @Override

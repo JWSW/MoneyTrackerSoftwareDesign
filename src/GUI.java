@@ -48,11 +48,15 @@ public class GUI extends JFrame implements Observer{
         }
 
     @Override
-    public void update() {
+    public void updatePerson() {
         PersonObserver personObserver  = new PersonObserver();
+        personObserver.updatePerson();
+    }
+
+    @Override
+    public void updateTicket() {
         TicketObserver ticketObserver = new TicketObserver();
-        personObserver.update();
-        ticketObserver.update();
+        ticketObserver.updateTicket();
     }
 
 //        @Override

@@ -24,8 +24,10 @@ public class RegisterPerson extends DataPersons{
 
     @Override
     public void addPerson(Person person) {
-        db.put(person.getName(),person.getSchuld());
-        System.out.println(db.keySet());
+        db.put(person.getName(), person.getSchuld());
+        for (Observer o: observerList){
+            o.updatePerson();
+        }
     }
 
     @Override
@@ -39,12 +41,22 @@ public class RegisterPerson extends DataPersons{
     }
 
     @Override
+    public void changeValue(String name, Double value) {
+        if(db.containsKey(name)){
+            System.out.println(name + " komt hier>\n" + db.get(name) + " wordt normaal gezien " + (db.get(name)+value));
+            db.replace(name,db.get(name),(db.get(name)+value));
+        }
+    }
+
+    @Override
     public Person getPerson(String personName) {
-        Person person = new Person();
+        Person person = new Person(personName);
         if(db.containsKey(personName)){
             person.setName(personName);
             person.setSchuld(db.get(personName));
         }
         return person;
     }
+
+
 }

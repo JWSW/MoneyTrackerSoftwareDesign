@@ -3,7 +3,13 @@ Credits to Jens de Hoog.
  */
 
 import Databases.DataPersons;
+import Databases.DataTickets;
 import Databases.RegisterPerson;
+import Databases.RegisterTickets;
+import PersonData.Person;
+import TicketFactories.TaxiTicketFactory;
+import TicketFactories.TicketFactory;
+import TicketFactories.TicketFactoryProvider;
 import controller.RegistrationController;
 
 public class Main
@@ -22,12 +28,41 @@ public class Main
     public void run()
     {
         // Replace with your own objects
-        DataPersons timedb = RegisterPerson.getInstance();
-        RegistrationController register= new RegistrationController(timedb);
-
+        DataPersons dbPerson = RegisterPerson.getInstance();
+        DataTickets dbTicket = RegisterTickets.getInstance();
+        RegistrationController register= new RegistrationController(dbPerson);
+        TicketFactory TaxiTicketFactory = TicketFactoryProvider.getTaxiTicket();
+        TicketFactory PlaneTicketFactory = TicketFactoryProvider.getPlaneTicket();
+        TicketFactory RestoTicketFactory = TicketFactoryProvider.getRestoTicket();
+        TicketFactory OtherTicketFactory = TicketFactoryProvider.getOtherTicket();
         GUI view = new GUI();
+
+        dbPerson.addObserver(view);
+        dbTicket.addObserver(view);
+
+        Person person1 = new Person("Bob");
+        Person person2 = new Person("Marie");
+        Person person3 = new Person("Jef");
+        Person person4 = new Person("An");
+
+        dbPerson.addPerson(person1);
+        dbPerson.addPerson(person2);
+        dbPerson.addPerson(person3);
+        dbPerson.addPerson(person4);
+
+        TaxiTicketFactory.addTicket("Bob", 40.0);
+        System.out.println(dbPerson.getPerson(person1.getName()));
+        System.out.println(dbPerson.getPerson(person2.getName()));
+        System.out.println(dbPerson.getPerson(person3.getName()));
+        System.out.println(dbPerson.getPerson(person4.getName()));
+
+        PlaneTicketFactory.addTicket("Marie", 120.0);
+        System.out.println(dbPerson.getPerson(person1.getName()));
+        System.out.println(dbPerson.getPerson(person2.getName()));
+        System.out.println(dbPerson.getPerson(person3.getName()));
+        System.out.println(dbPerson.getPerson(person4.getName()));
+
         view.initialize();
-        timedb.addObserver(view);
         //register.IetsDatIetsToevoegd();
 
         sleep(3000);
