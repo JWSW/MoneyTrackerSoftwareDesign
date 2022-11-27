@@ -8,6 +8,7 @@ package panels;
 import controller.RegistrationController;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class RegistrationButtonPanel extends JPanel {
@@ -19,6 +20,9 @@ public class RegistrationButtonPanel extends JPanel {
     private boolean isUpdated;
     private int index = 0;
     private Double sum = 0.0;
+    private String tName;
+    private ArrayList<Double> inputList = new ArrayList<>();
+    private boolean SumGreaterThanAmountError = false;
     private JFrame frame1 = new JFrame("Moneykeeper");
 
     // Get your controller in this private field
@@ -245,7 +249,7 @@ public class RegistrationButtonPanel extends JPanel {
                 if(!Objects.equals(ticketName,"other")){
                     controller.addTicket(ticketName,name, Double.valueOf(value), false);
                 }else{
-                    String tName = ticketTextName.getText();
+                    tName = ticketTextName.getText();
                     controller.addTicket(ticketName,name, Double.valueOf(value), isEven);
                 }
                 if((!Objects.equals(ticketName, "taxi") || !Objects.equals(ticketName, "plane"))&&!isEven){
@@ -256,6 +260,13 @@ public class RegistrationButtonPanel extends JPanel {
                     {
                         isUpdated=false;
                         setAmounts(name, ticketPanel, Double.valueOf(value));
+                        if(SumGreaterThanAmountError){
+                            if(!Objects.equals(ticketName, "resto")){
+                                controller.removeTicket(name,"restaurant ticket");
+                            }else{
+                                controller.removeTicket(name, tName);
+                            }
+                        }
                         ticketPanel.remove(setDepts);
                     });
                 }
@@ -303,28 +314,49 @@ public class RegistrationButtonPanel extends JPanel {
         next.addActionListener(a ->
         {
             String waarde = value.getText();
+            inputList.add(Double.valueOf(waarde));
             if(index<(controller.getDBPerson().getPersonList().keySet().size()-1)){
                 if(!Objects.equals(stringList[index], payerName)){
                     if(sum<amount){
                         controller.changeValue(stringList[index], Double.valueOf(waarde));
                         sum +=Double.parseDouble(waarde);
                     }else {
+                        inputList.remove(inputList.size()-1);
+                        int j = 0;
+                        for(Double i:inputList){
+                            controller.changeValue(stringList[j], -i);
+                            j+=1;
+                        }
                         System.out.println("ERROR: your input has exceeded the total amount");
                         JLabel errorLabel = new JLabel("ERROR: your input has exceeded the total amount");
-                        errorLabel.setBounds(100, 105, 280, 25);
-                        deptSetPanel.add(errorLabel);
-                        deptSetPanel.repaint();
+                        errorLabel.setBounds(100, 155, 280, 25);
+                        isUpdated=false;
+                        SumGreaterThanAmountError = true;
+                        panel1.add(errorLabel);
+                        frame1.remove(deptSetPanel);
+                        frame1.add(panel1);
+                        frame1.repaint();
                     }
                 }else{
                     if(sum<amount){
                         controller.changeValue(stringList[index], -(amount-Double.parseDouble(waarde)));
                         sum +=Double.parseDouble(waarde);
                     }else {
+                        inputList.remove(inputList.size()-1);
+                        int j = 0;
+                        for(Double i:inputList){
+                            controller.changeValue(stringList[j], -i);
+                            j+=1;
+                        }
                         System.out.println("ERROR: your input has exceeded the total amount");
                         JLabel errorLabel = new JLabel("ERROR: your input has exceeded the total amount");
-                        errorLabel.setBounds(100, 105, 280, 25);
-                        deptSetPanel.add(errorLabel);
-                        deptSetPanel.repaint();
+                        errorLabel.setBounds(100, 155, 280, 25);
+                        isUpdated=false;
+                        SumGreaterThanAmountError = true;
+                        panel1.add(errorLabel);
+                        frame1.remove(deptSetPanel);
+                        frame1.add(panel1);
+                        frame1.repaint();
                     }
 
                 }
@@ -339,21 +371,38 @@ public class RegistrationButtonPanel extends JPanel {
                     if(sum<amount){
                         controller.changeValue(stringList[index], (amount-sum));
                     }else{
+                        int j = 0;
+                        for(Double i:inputList){
+                            controller.changeValue(stringList[j], -i);
+                            j+=1;
+                        }
                         System.out.println("ERROR: your input has exceeded the total amount");
                         JLabel errorLabel = new JLabel("ERROR: your input has exceeded the total amount");
-                        errorLabel.setBounds(100, 105, 280, 25);
-                        deptSetPanel.add(errorLabel);
-                        deptSetPanel.repaint();
+                        errorLabel.setBounds(100, 155, 280, 25);
+                        isUpdated=false;
+                        SumGreaterThanAmountError = true;
+                        panel1.add(errorLabel);
+                        frame1.remove(deptSetPanel);
+                        frame1.add(panel1);
+                        frame1.repaint();
                     }
                 }else{
                     if(sum<amount){
                         controller.changeValue(stringList[index], -(amount-(amount-sum)));
+                    }else{
+                        int j = 0;
+                        for(Double i:inputList){
+                            controller.changeValue(stringList[j], -i);
+                            j+=1;
+                        }
+                        System.out.println("ERROR: your input has exceeded the total amount");
+                        JLabel errorLabel = new JLabel("ERROR: your input has exceeded the total amount");
+                        errorLabel.setBounds(100, 155, 280, 25);
+                        panel1.add(errorLabel);
+                        frame1.remove(deptSetPanel);
+                        frame1.add(panel1);
+                        frame1.repaint();
                     }
-                    System.out.println("ERROR: your input has exceeded the total amount");
-                    JLabel errorLabel = new JLabel("ERROR: your input has exceeded the total amount");
-                    errorLabel.setBounds(100, 105, 280, 25);
-                    deptSetPanel.add(errorLabel);
-                    deptSetPanel.repaint();
                 }
                 index=0;
                 sum=0.0;

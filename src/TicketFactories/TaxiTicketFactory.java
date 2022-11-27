@@ -6,6 +6,7 @@ import Databases.RegisterPerson;
 import Databases.RegisterTickets;
 import PersonData.Person;
 import Tickets.PlaneTicket;
+import Tickets.TaxiTicket;
 import Tickets.Ticket;
 
 public class TaxiTicketFactory implements TicketFactory{
@@ -17,7 +18,7 @@ public class TaxiTicketFactory implements TicketFactory{
             Person person = new Person(payerName);
             dataPersons.addPerson(person);
         }
-        Ticket ticket = new PlaneTicket(payerName,amount);
+        Ticket ticket = new TaxiTicket(payerName,amount);
         dataTickets.addTicket(ticket);
         return ticket;
     }

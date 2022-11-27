@@ -6,6 +6,7 @@ import Tickets.Ticket;
 
 public interface Controller {
     void addTicket(String ticketName, String payerName, Double amount, boolean isEven);
+    void removeTicket(String personName, String ticketName);
     void addPerson(String name);
     DataPersons getDBPerson();
 

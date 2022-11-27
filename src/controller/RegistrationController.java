@@ -39,6 +39,11 @@ public class RegistrationController implements Controller{
     }
 
     @Override
+    public void removeTicket(String personName, String ticketName) {
+
+    }
+
+    @Override
     public void addPerson(String name) {
         Person person = new Person(name);
         dbPersons.addPerson(person);

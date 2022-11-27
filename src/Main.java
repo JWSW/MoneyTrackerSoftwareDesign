@@ -61,7 +61,10 @@ public class Main
         System.out.println(dbPerson.getPerson(person2.getName()));
         System.out.println(dbPerson.getPerson(person3.getName()));
         System.out.println(dbPerson.getPerson(person4.getName()));
-        System.out.println(dbTicket.getTicket("Marie"));
+        System.out.println(dbTicket.getTicket("Marie", "blabla"));
+
+        TaxiTicketFactory.addTicket("Marie", 30.0);
+        System.out.println(dbTicket.getTicket("Marie", "taxi ticket"));
 
         view.initialize();
         //register.IetsDatIetsToevoegd();
