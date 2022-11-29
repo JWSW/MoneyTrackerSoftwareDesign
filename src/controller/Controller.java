@@ -10,5 +10,5 @@ public interface Controller {
     void addPerson(String name);
     DataPersons getDBPerson();
 
-    void changeValue(String name, Double amount);
+    void changeValue(String name, String creditor, Double amount);
 }

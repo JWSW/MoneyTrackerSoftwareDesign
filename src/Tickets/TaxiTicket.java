@@ -3,6 +3,7 @@ package Tickets;
 import Databases.DataPersons;
 import Databases.RegisterPerson;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class TaxiTicket extends Ticket{
@@ -14,11 +15,13 @@ public class TaxiTicket extends Ticket{
         ticketSplit.evenTicketSplit();
         if (ticketSplit.isEven){
             for(String i:dbPerson.getPersonList().keySet()){
-                if(Objects.equals(i, payerName)){
-                    dbPerson.changeValue(i,(-amount+(amount/dbPerson.getPersonList().keySet().size())));
-                }else {
-                    dbPerson.changeValue(i, amount / dbPerson.getPersonList().keySet().size());
+                if(!Objects.equals(i, payerName)){
+                    DecimalFormat f = new DecimalFormat("##.00");
+                    dbPerson.changeValue(i,payerName, (amount / dbPerson.getPersonList().keySet().size()));
                 }
+//                else{
+//                    dbPerson.changeValue(i, payerName, (-amount+(amount/dbPerson.getPersonList().keySet().size())));
+//                }
             }
         }
     }

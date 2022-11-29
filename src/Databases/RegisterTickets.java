@@ -62,10 +62,10 @@ public class RegisterTickets extends DataTickets{
             for(String i:db.get(personName).keySet()) {
                 ticketName2 = i;
             }
-            ticket = new OtherTicket(ticketName2,personName,getal, true);
+            ticket = new OtherTicket(ticketName2,personName,getal, false);
         }else{
             getal = db.get(personName).get(ticketName);
-            ticket = new OtherTicket(ticketName,personName,getal, true);
+            ticket = new OtherTicket(ticketName,personName,getal, false);
         }
 
         return ticket;
@@ -78,6 +78,6 @@ public class RegisterTickets extends DataTickets{
         }else{
             db.remove(personName).remove(ticketName);
         }
-
+        System.out.println("Ticket got removed.");
     }
 }

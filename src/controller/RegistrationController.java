@@ -40,7 +40,7 @@ public class RegistrationController implements Controller{
 
     @Override
     public void removeTicket(String personName, String ticketName) {
-
+        dbTickets.removeTicket(personName, ticketName);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class RegistrationController implements Controller{
     }
 
     @Override
-    public void changeValue(String name, Double amount) {
-        dbPersons.changeValue(name, amount);
+    public void changeValue(String name, String creditor, Double amount) {
+        dbPersons.changeValue(name, creditor, amount);
     }
 
 //    @Override

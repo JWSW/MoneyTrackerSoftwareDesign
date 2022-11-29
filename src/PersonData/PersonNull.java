@@ -5,6 +5,6 @@ public class PersonNull extends Person{
     public PersonNull()
     {
         super("None");
-        setSchuld(0);
+        setSchuld("None", 0);
     }
 }

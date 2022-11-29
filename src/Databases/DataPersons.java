@@ -13,8 +13,8 @@ public abstract class DataPersons {
     public abstract void addPerson(Person person);
     public abstract Person getPerson(String personName);
 
-    public abstract HashMap<String,Double> getPersonList();
+    public abstract HashMap<String,HashMap<String,Double>> getPersonList();
     public abstract void addObserver(Observer observer);
 
-    public abstract void changeValue(String name, Double value);
+    public abstract void changeValue(String name, String eiserName, Double value);
 }
