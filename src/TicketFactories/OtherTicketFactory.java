@@ -22,6 +22,7 @@ public class OtherTicketFactory implements TicketFactory{
             Person person = new Person(payerName);
             dataPersons.addPerson(person);
         }
+        System.out.println("Een ticket type: " + ticketName);
         Ticket ticket = new OtherTicket(ticketName, payerName,amount, isEven);
         dataTickets.addTicket(ticket);
         return ticket;

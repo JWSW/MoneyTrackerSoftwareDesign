@@ -5,10 +5,8 @@ import Databases.DataTickets;
 import Databases.RegisterPerson;
 import Databases.RegisterTickets;
 import PersonData.Person;
-import TicketFactories.TaxiTicketFactory;
 import TicketFactories.TicketFactory;
 import TicketFactories.TicketFactoryProvider;
-import Tickets.Ticket;
 
 import java.util.Objects;
 
@@ -52,6 +50,11 @@ public class RegistrationController implements Controller{
     @Override
     public DataPersons getDBPerson() {
         return dbPersons;
+    }
+
+    @Override
+    public DataTickets getDBTicket() {
+        return dbTickets;
     }
 
     @Override

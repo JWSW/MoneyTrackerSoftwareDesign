@@ -8,6 +8,7 @@ package panels;
 import controller.RegistrationController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -57,8 +58,8 @@ public class RegistrationButtonPanel extends JPanel {
         seeDepts = new JButton("See depts");
         seeDepts.setBounds(290, 45, 100, 35);
 
-//        getTicket = new JButton("Get a ticket");
-//        getTicket.setBounds(80, 85, 100, 35);
+        getTicket = new JButton("See tickets");
+        getTicket.setBounds(80, 85, 100, 35);
 
 
         // Create your temporary employee here
@@ -66,7 +67,7 @@ public class RegistrationButtonPanel extends JPanel {
         addTicketButtonActionListener(panel);
         addPersonButtonActionListener(panel);
         addseeDeptButtonActionListener(panel);
-//        getTicketButtonActionListener(panel);
+        getTicketButtonActionListener(panel);
 
 //        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 
@@ -74,15 +75,87 @@ public class RegistrationButtonPanel extends JPanel {
         panel.add(addTicket);
         panel.add(addPerson);
         panel.add(seeDepts);
-//        panel.add(getTicket);
+        panel.add(getTicket);
     }
+    private void addGetTicketNameListener(JPanel panel1, String personName, JButton button){
+        button.addActionListener(e->{
+            JPanel getNameTicketPanel = new JPanel();
+            frame1.remove(panel1);
+            frame1.add(getNameTicketPanel);
+            frame1.setVisible(true);
 
-//    private void getTicketButtonActionListener(JPanel panel1) {
-//        JPanel getTicketPanel = new JPanel();
-//        frame1.remove(panel1);
-//        frame1.add(getTicketPanel);
-//        frame1.setVisible(true);
-//    }
+            JLabel ticketLabel = new JLabel();
+            if (controller.getDBTicket().getTicketList().get(personName).size() < 2) {
+
+                ticketLabel.setText(controller.getDBTicket().getTicket(personName, "DoesntMatter").toString());
+                ticketLabel.setBounds(80, 5, 300, 20);
+                getNameTicketPanel.add(ticketLabel);
+                getNameTicketPanel.repaint();
+            } else {
+                JLabel questionLabel = new JLabel("Which ticket do you want to see?");
+                questionLabel.setBounds(80, 5, 300, 20);
+                getNameTicketPanel.add(questionLabel);
+                String temp = "";
+                int j = 25;
+                JButton back = new JButton("Back");
+
+                for (String i : controller.getDBTicket().getTicketList().get(personName).keySet()) {
+                    temp += i + ",";
+                    JButton ticketButton = new JButton(i);
+                    ticketButton.setBounds(100,j,150,25);
+                    j+=30;
+                    getNameTicketPanel.add(ticketButton);
+                    ticketButton.addActionListener(a->{
+                        ticketLabel.setText(controller.getDBTicket().getTicket(personName, i).toString());
+                        ticketLabel.setBounds(80, 180, 300, 20);
+                        getNameTicketPanel.add(ticketLabel);
+                        getNameTicketPanel.setLayout(new BoxLayout(getNameTicketPanel, BoxLayout.Y_AXIS));
+                        getNameTicketPanel.repaint();
+                    });
+                }
+            }
+            JButton back = new JButton("Back");
+            back.setBounds(300, 180, 80, 25);
+            getNameTicketPanel.add(back);
+            back.addActionListener(a ->
+            {
+                frame1.remove(getNameTicketPanel);
+                frame1.add(panel1);
+                frame1.repaint();
+            });
+        });
+    }
+    private void getTicketButtonActionListener(JPanel panel1) {
+        getTicket.addActionListener(e -> {
+            JPanel getTicketPanel = new JPanel();
+            frame1.remove(panel1);
+            frame1.add(getTicketPanel);
+            frame1.setVisible(true);
+
+            JLabel headLabel = new JLabel("Who's tickets do you want to see?");
+            headLabel.setBounds(100, 5, 200, 20);
+            getTicketPanel.add(headLabel);
+
+            int j = 25;
+            for(String i:controller.getDBTicket().getTicketList().keySet()){
+                JButton nameButton = new JButton(i);
+                nameButton.setBounds(100,j,100,25);
+                getTicketPanel.add(nameButton);
+                addGetTicketNameListener(getTicketPanel, nameButton.getText(), nameButton);
+                j+=30;
+            }
+
+            JButton back = new JButton("Back");
+            back.setBounds(300, 180, 80, 25);
+            getTicketPanel.add(back);
+            back.addActionListener(a ->
+            {
+                frame1.remove(getTicketPanel);
+                frame1.add(panel1);
+                frame1.repaint();
+            });
+        });
+    }
 
     private void addseeDeptButtonActionListener(JPanel panel1) {
         seeDepts.addActionListener(listener ->
@@ -283,7 +356,7 @@ public class RegistrationButtonPanel extends JPanel {
                     controller.addTicket(ticketName,pName, Double.valueOf(value), false);
                 }else{
                     tName = ticketTextName.getText();
-                    controller.addTicket(ticketName,pName, Double.valueOf(value), isEven);
+                    controller.addTicket(tName,pName, Double.valueOf(value), isEven);
                 }
                 if((!Objects.equals(ticketName, "taxi") && !Objects.equals(ticketName, "plane"))&&!isEven){
                     JButton setDepts = new JButton("Set depts");
@@ -394,31 +467,6 @@ public class RegistrationButtonPanel extends JPanel {
                 nameLabel.setText("Give the amount of dept for " + stringList[index]);
                 deptSetPanel.add(nameLabel);
                 deptSetPanel.repaint();
-//                if(!Objects.equals(stringList[index], payerName)){
-//                    deptSetPanel.remove(nameLabel);
-//                    nameLabel.setText("Give the amount of dept for " + stringList[index]);
-//                    deptSetPanel.add(nameLabel);
-//                    deptSetPanel.repaint();
-//                }else{
-//                    if(index<(controller.getDBPerson().getPersonList().keySet().size()-1)) {
-//                        index += 1;
-//                        payerPassed=true;
-//                        deptSetPanel.remove(nameLabel);
-//                        nameLabel.setText("Give the amount of dept for " + stringList[index]);
-//                        deptSetPanel.add(nameLabel);
-//                        deptSetPanel.repaint();
-//                    }else{
-//                        index=0;
-//                        sum=0.0;
-//                        if(!SumGreaterThanAmountError) {
-//                            frame1.remove(deptSetPanel);
-//                            frame1.add(panel1);
-//                            frame1.repaint();
-//                            isUpdated = false;
-//                            payerPassed = false;
-//                        }
-//                    }
-//                }
             }
             if(index==(controller.getDBPerson().getPersonList().keySet().size()-1)&&!SumGreaterThanAmountError){
                 if(!Objects.equals(stringList[index], payerName)){

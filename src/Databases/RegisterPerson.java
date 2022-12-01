@@ -44,16 +44,14 @@ public class RegisterPerson extends DataPersons{
     @Override
     public void changeValue(String name, String eiserName, Double value) {
         if(db.containsKey(name)) {
-            DecimalFormat f = new DecimalFormat("##.00");
             if (db.get(name).containsKey(eiserName)) {
-                db.get(name).replace(eiserName, db.get(name).get(eiserName), db.get(name).get(eiserName) + value);
+                db.get(name).replace(eiserName, db.get(name).get(eiserName), (double) (Math.round((db.get(name).get(eiserName) + value)*100))/100);
             } else {
-                db.get(name).put(eiserName, value);
+                db.get(name).put(eiserName, (double) (Math.round(value*100))/100);
             }
         }
         if(db.get(eiserName).containsKey(name)){
-            Double verschil = Math.abs(db.get(name).get(eiserName)-db.get(eiserName).get(name));
-            DecimalFormat verschilf = new DecimalFormat("##.00");
+            Double verschil = (double)(Math.round(100*Math.abs(db.get(name).get(eiserName)-db.get(eiserName).get(name))))/100;
             if(db.get(name).get(eiserName)<db.get(eiserName).get(name)){
                 db.get(eiserName).replace(name,db.get(eiserName).get(name), verschil);
                 db.get(name).remove(eiserName);

@@ -36,6 +36,11 @@ public class RegisterTickets extends DataTickets{
         }
     }
 
+    @Override
+    public HashMap<String, HashMap<String, Double>> getTicketList() {
+        return db;
+    }
+
     public static DataTickets getInstance(){
         if(uniqueInstance==null){
             uniqueInstance = new RegisterTickets();
