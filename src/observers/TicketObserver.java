@@ -1,8 +1,10 @@
 package observers;
 
+import PersonData.Person;
+
 public class TicketObserver implements Observer{
     @Override
-    public void updatePerson() {
+    public void updatePerson(Person person) {
     }
 
     @Override

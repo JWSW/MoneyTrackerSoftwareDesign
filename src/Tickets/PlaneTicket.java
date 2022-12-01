@@ -11,17 +11,6 @@ public class PlaneTicket extends Ticket{
     public PlaneTicket(String payerName, Double amount) {
         super("planeticket", payerName, amount);
         TicketSplit ticketSplit = new TicketSplit();
-        ticketSplit.evenTicketSplit();
-        if (ticketSplit.isEven){
-            for(String i:dbPerson.getPersonList().keySet()){
-                if(!Objects.equals(i, payerName)){
-                    DecimalFormat f = new DecimalFormat("##.00");
-                    dbPerson.changeValue(i,payerName, amount / dbPerson.getPersonList().keySet().size());
-                }
-//                else{
-//                    dbPerson.changeValue(i, payerName, (-amount+(amount/dbPerson.getPersonList().keySet().size())));
-//                }
-            }
-        }
+        ticketSplit.evenTicketSplit(payerName, amount);
     }
 }

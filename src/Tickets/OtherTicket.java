@@ -11,17 +11,10 @@ public class OtherTicket extends Ticket{
     public OtherTicket(String ticketName, String payerName, Double amount, boolean isEven) {
         super(ticketName, payerName, amount);
         TicketSplit ticketSplit = new TicketSplit();
-        if (isEven){
-            ticketSplit.evenTicketSplit();
-            for(String i:dbPerson.getPersonList().keySet()){
-                if(!Objects.equals(i, payerName)){
-                    DecimalFormat f = new DecimalFormat("##.00");
-                    dbPerson.changeValue(i,payerName, amount / dbPerson.getPersonList().keySet().size());
-                }
-//                else{
-//                    dbPerson.changeValue(i, payerName, (-amount+(amount/dbPerson.getPersonList().keySet().size())));
-//                }
-            }
+        if(isEven){
+            ticketSplit.evenTicketSplit(payerName, amount);
+        }else{
+            ticketSplit.unevenTicketSplit();
         }
     }
 }

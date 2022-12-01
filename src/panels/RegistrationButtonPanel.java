@@ -5,6 +5,7 @@ Credits to Jens de Hoog
 package panels;
 
 
+import PersonData.Person;
 import controller.RegistrationController;
 
 import javax.swing.*;
@@ -15,6 +16,9 @@ import java.util.Objects;
 
 public class RegistrationButtonPanel extends JPanel {
 
+    private JList<Person> personJList;
+    private DefaultListModel<Person> personListModel;
+    private Person person = new Person("None");
     private JButton addTicket;
     private JButton addPerson;
     private JButton seeDepts;
@@ -61,6 +65,9 @@ public class RegistrationButtonPanel extends JPanel {
         getTicket = new JButton("See tickets");
         getTicket.setBounds(80, 85, 100, 35);
 
+        personListModel = new DefaultListModel<>();
+        personJList = new JList<>(personListModel);
+
 
         // Create your temporary employee here
 //        this.employee = your factory creating an employee
@@ -76,6 +83,9 @@ public class RegistrationButtonPanel extends JPanel {
         panel.add(addPerson);
         panel.add(seeDepts);
         panel.add(getTicket);
+    }
+    public void addPerson(Person person){
+        this.person = person;
     }
     private void addGetTicketNameListener(JPanel panel1, String personName, JButton button){
         button.addActionListener(e->{
@@ -262,9 +272,12 @@ public class RegistrationButtonPanel extends JPanel {
                 String name = personText.getText();
                 controller.addPerson(name);
                 if(!isUpdated){
-                    JLabel feedback = new JLabel("Person got added.");
+                    JLabel feedback = new JLabel("Person " + person.getName() + " got added.");
                     feedback.setBounds(100, 90, 140, 25);
+                    personJList.setBounds(100,120,personJList.getWidth(),personJList.getHeight());
+//                    System.out.println(personJList);
                     personPanel.add(feedback);
+                    personPanel.add(personJList);
                     personPanel.repaint();
                     isUpdated=true;
                 }
