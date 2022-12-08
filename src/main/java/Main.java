@@ -30,7 +30,7 @@ public class Main
         // Replace with your own objects
         DataPersons dbPerson = RegisterPerson.getInstance();
         DataTickets dbTicket = RegisterTickets.getInstance();
-        RegistrationController controller= new RegistrationController();
+        RegistrationController controller= new RegistrationController(dbPerson, dbTicket);
         TicketFactory TaxiTicketFactory = TicketFactoryProvider.getTaxiTicketFactory();
         TicketFactory PlaneTicketFactory = TicketFactoryProvider.getPlaneTicketFactory();
         TicketFactory RestoTicketFactory = TicketFactoryProvider.getRestoTicketFactory();

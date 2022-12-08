@@ -5,6 +5,8 @@ Credits to Jens de Hoog
 package panels;
 
 
+import Databases.RegisterPerson;
+import Databases.RegisterTickets;
 import controller.RegistrationController;
 
 import javax.swing.*;
@@ -31,7 +33,7 @@ public class RegistrationButtonPanel extends JPanel {
     private JFrame frame1 = new JFrame("Moneykeeper");
 
     // Get your controller in this private field
-    private RegistrationController controller = new RegistrationController();
+    private RegistrationController controller = new RegistrationController(RegisterPerson.getInstance(), RegisterTickets.getInstance());
 
     // For now, just make a new employee in this class via your factory.
     // You can change this later on to a more unified way

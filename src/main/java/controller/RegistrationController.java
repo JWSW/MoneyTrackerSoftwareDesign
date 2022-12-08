@@ -18,9 +18,10 @@ public class RegistrationController implements Controller{
     TicketFactory restoTicketFactory = TicketFactoryProvider.getRestoTicketFactory();
     TicketFactory otherTicketFactory = TicketFactoryProvider.getOtherTicketFactory();
 
-    public RegistrationController()
+    public RegistrationController(DataPersons dbPersons, DataTickets dbTickets)
     {
-
+        this.dbPersons = dbPersons;
+        this.dbTickets = dbTickets;
     }
 
     @Override

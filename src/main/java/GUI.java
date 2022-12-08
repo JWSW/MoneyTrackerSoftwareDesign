@@ -4,6 +4,8 @@ Credits to Jens de Hoog
 
 import javax.swing.*;
 
+import Databases.RegisterPerson;
+import Databases.RegisterTickets;
 import controller.RegistrationController;
 import observers.Observer;
 //import observers.PrintEntry;
@@ -18,7 +20,7 @@ import panels.RegistrationButtonPanel;
 public class GUI extends JFrame implements Observer{
 
         // Get your controller in this private field
-        RegistrationController controller = new RegistrationController();
+        RegistrationController controller = new RegistrationController(RegisterPerson.getInstance(), RegisterTickets.getInstance());
 
         ListPanel panel;
         RegistrationButtonPanel panels;
