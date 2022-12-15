@@ -1,9 +1,11 @@
 package observers;
 
+import PersonData.Person;
+
 public class PersonObserver implements Observer {
     @Override
-    public void updatePerson() {
-        System.out.println("Person got added.");
+    public void updatePerson(Person person) {
+        System.out.println("Person " + person.getName() + " got added.");
     }
 
     @Override

@@ -4,8 +4,7 @@ Credits to Jens de Hoog
 
 import javax.swing.*;
 
-import Databases.RegisterPerson;
-import Databases.RegisterTickets;
+import PersonData.Person;
 import controller.RegistrationController;
 import observers.Observer;
 //import observers.PrintEntry;
@@ -23,7 +22,7 @@ public class GUI extends JFrame implements Observer{
         RegistrationController controller = new RegistrationController();
 
         ListPanel panel;
-        RegistrationButtonPanel panels;
+        RegistrationButtonPanel panels = new RegistrationButtonPanel();
 
         public GUI()
         {
@@ -32,15 +31,18 @@ public class GUI extends JFrame implements Observer{
 
         public void initialize()
         {
-            panels = new RegistrationButtonPanel();
+
+//             Pass the controller to the ButtonPanel
+//            panels = new RegistrationButtonPanel();
         }
 
 
 
     @Override
-    public void updatePerson() {
+    public void updatePerson(Person person) {
         PersonObserver personObserver  = new PersonObserver();
-        personObserver.updatePerson();
+        personObserver.updatePerson(person);
+        panels.addPerson(person);
     }
 
     @Override

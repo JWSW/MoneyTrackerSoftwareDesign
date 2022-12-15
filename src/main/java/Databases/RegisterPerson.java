@@ -27,7 +27,7 @@ public class RegisterPerson extends DataPersons{
     public void addPerson(Person person) {
         db.put(person.getName(), person.getSchuldList());
         for (Observer o: observerList){
-            o.updatePerson();
+            o.updatePerson(person);
         }
     }
 

@@ -59,10 +59,8 @@ public class Person {
 
     @Override
     public String toString() {
-        ArrayList<String> zinList = new ArrayList<>();
         String zin="";
         for(String i:schuldList.keySet()){
-            zinList.add(name + " is " + schuldList.get(i) + " in dept to " + i + "\n");
             zin += name + " is " + schuldList.get(i) + " in dept to " + i + "\n";
         }
         return zin;
