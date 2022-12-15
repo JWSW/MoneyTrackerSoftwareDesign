@@ -32,13 +32,8 @@ public class RegistrationButtonPanel extends JPanel {
     private boolean SumGreaterThanAmountError;
     private JFrame frame1 = new JFrame("Moneykeeper");
 
-    // Get your controller in this private field
     private RegistrationController controller = new RegistrationController();
 
-    // For now, just make a new employee in this class via your factory.
-    // You can change this later on to a more unified way
-
-    // Get your controller in this class via the constructor
     public RegistrationButtonPanel()
     {
         frame1.setSize(500, 500);
@@ -64,14 +59,11 @@ public class RegistrationButtonPanel extends JPanel {
         getTicket.setBounds(80, 85, 100, 35);
 
 
-        // Create your temporary employee here
-//        this.employee = your factory creating an employee
         addTicketButtonActionListener(panel);
         addPersonButtonActionListener(panel);
         addseeDeptButtonActionListener(panel);
         getTicketButtonActionListener(panel);
 
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 
         panel.add(label);
         panel.add(addTicket);
