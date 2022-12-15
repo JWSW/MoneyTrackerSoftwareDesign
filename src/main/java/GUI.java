@@ -20,7 +20,7 @@ import panels.RegistrationButtonPanel;
 public class GUI extends JFrame implements Observer{
 
         // Get your controller in this private field
-        RegistrationController controller = new RegistrationController(RegisterPerson.getInstance(), RegisterTickets.getInstance());
+        RegistrationController controller = new RegistrationController();
 
         ListPanel panel;
         RegistrationButtonPanel panels;

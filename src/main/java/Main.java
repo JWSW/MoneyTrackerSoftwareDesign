@@ -30,7 +30,7 @@ public class Main
         // Replace with your own objects
         DataPersons dbPerson = RegisterPerson.getInstance();
         DataTickets dbTicket = RegisterTickets.getInstance();
-        RegistrationController controller= new RegistrationController(dbPerson, dbTicket);
+        RegistrationController controller= new RegistrationController();
         TicketFactory TaxiTicketFactory = TicketFactoryProvider.getTaxiTicketFactory();
         TicketFactory PlaneTicketFactory = TicketFactoryProvider.getPlaneTicketFactory();
         TicketFactory RestoTicketFactory = TicketFactoryProvider.getRestoTicketFactory();
@@ -69,19 +69,6 @@ public class Main
         view.initialize();
         //register.IetsDatIetsToevoegd();
 
-        sleep(3000);
     }
 
-    public void sleep(int millis)
-    {
-        try
-        {
-            System.out.print("Sleeping [    ]\r");
-            Thread.sleep(millis);
-            System.out.println("Sleeping [ OK ]");
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-    }
 }

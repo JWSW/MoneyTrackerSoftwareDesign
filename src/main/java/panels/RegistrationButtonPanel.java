@@ -33,7 +33,7 @@ public class RegistrationButtonPanel extends JPanel {
     private JFrame frame1 = new JFrame("Moneykeeper");
 
     // Get your controller in this private field
-    private RegistrationController controller = new RegistrationController(RegisterPerson.getInstance(), RegisterTickets.getInstance());
+    private RegistrationController controller = new RegistrationController();
 
     // For now, just make a new employee in this class via your factory.
     // You can change this later on to a more unified way
