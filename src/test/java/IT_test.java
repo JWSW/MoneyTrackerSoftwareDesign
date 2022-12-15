@@ -50,10 +50,12 @@ public class IT_test {
         HashMap<String,HashMap<String, Double>> personList = dbPerson.getPersonList();
         double debt = personList.get(testPerson2.getName()).get(testPerson1.getName());
         assertEquals(debt, 5.0, 0);
+
         factory = new PlaneTicketFactory();
         factory.addTicket(testPerson2.getName(), 400.0);
         personList = dbPerson.getPersonList();
         debt = personList.get(testPerson1.getName()).get(testPerson2.getName());
+
         assertEquals(debt, 95.0, 0);
     }
 
