@@ -11,8 +11,8 @@ import TicketFactories.TicketFactoryProvider;
 import java.util.Objects;
 
 public class RegistrationController implements Controller{
-    private DataPersons dbPersons = RegisterPerson.getInstance();
-    private DataTickets dbTickets = RegisterTickets.getInstance();
+    private DataPersons dbPersons;
+    private DataTickets dbTickets;
     TicketFactory taxiTicketFactory = TicketFactoryProvider.getTaxiTicketFactory();
     TicketFactory planeTicketFactory = TicketFactoryProvider.getPlaneTicketFactory();
     TicketFactory restoTicketFactory = TicketFactoryProvider.getRestoTicketFactory();
@@ -63,17 +63,4 @@ public class RegistrationController implements Controller{
         dbPersons.changeValue(name, creditor, amount);
     }
 
-//    @Override
-//    public void checkIn()
-//    {
-//        RegisterEntry entry = new RegisterEntry(true);
-//        db.addEntry(e, entry);
-//    }
-
-//    @Override
-//    public void checkOut()
-//    {
-//        RegisterEntry entry = new RegisterEntry(false);
-//        db.addEntry(e, entry);
-//    }
 }
