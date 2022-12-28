@@ -6,6 +6,7 @@ import observers.Observer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class RegisterPerson extends DataPersons{
     private static RegisterPerson uniqueInstance;
@@ -29,6 +30,16 @@ public class RegisterPerson extends DataPersons{
         for (Observer o: observerList){
             o.updatePerson(person);
         }
+    }
+
+    @Override
+    public void removePerson(String name) {
+        for (String i:db.keySet()) {
+            if (!Objects.equals(i, name)) {
+                db.get(i).remove(name);
+            }
+        }
+        db.remove(name);
     }
 
     @Override

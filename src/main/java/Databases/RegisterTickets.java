@@ -81,7 +81,7 @@ public class RegisterTickets extends DataTickets{
         if(db.get(personName).size()<2){
             db.remove(personName);
         }else{
-            db.remove(personName).remove(ticketName);
+            db.get(personName).remove(ticketName);
         }
         System.out.println("Ticket got removed.");
     }

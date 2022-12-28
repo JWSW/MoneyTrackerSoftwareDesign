@@ -47,6 +47,10 @@ public class RegistrationController implements Controller{
         Person person = new Person(name);
         dbPersons.addPerson(person);
     }
+    @Override
+    public void removePerson(String name) {
+        dbPersons.removePerson(name);
+    }
 
     @Override
     public DataPersons getDBPerson() {

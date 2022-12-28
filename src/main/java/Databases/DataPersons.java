@@ -11,6 +11,8 @@ public abstract class DataPersons {
     public DataPersons(){}
 
     public abstract void addPerson(Person person);
+    public abstract void removePerson(String name);
+
     public abstract Person getPerson(String personName);
 
     public abstract HashMap<String,HashMap<String,Double>> getPersonList();

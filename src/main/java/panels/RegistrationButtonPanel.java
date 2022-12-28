@@ -21,6 +21,7 @@ public class RegistrationButtonPanel extends JPanel {
     private Person person = new Person("None");
     private JButton addTicket;
     private JButton addPerson;
+    private JButton removePerson;
     private JButton seeDepts;
     private JButton getTicket;
     private boolean isEven;
@@ -65,6 +66,9 @@ public class RegistrationButtonPanel extends JPanel {
         getTicket = new JButton("See tickets");
         getTicket.setBounds(80, 85, 100, 35);
 
+        removePerson = new JButton("Remove person");
+        removePerson.setBounds(185, 85, 205, 35);
+
         personListModel = new DefaultListModel<>();
         personJList = new JList<>(personListModel);
 
@@ -75,6 +79,7 @@ public class RegistrationButtonPanel extends JPanel {
         addPersonButtonActionListener(panel);
         addseeDeptButtonActionListener(panel);
         getTicketButtonActionListener(panel);
+        removePersonButtonActionListener(panel);
 
 //        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 
@@ -83,7 +88,51 @@ public class RegistrationButtonPanel extends JPanel {
         panel.add(addPerson);
         panel.add(seeDepts);
         panel.add(getTicket);
+        panel.add(removePerson);
     }
+
+    private void removePersonButtonActionListener(JPanel panel1) {
+        removePerson.addActionListener(listener ->
+        {
+            JPanel personPanel = new JPanel();
+            frame1.remove(panel1);
+            frame1.add(personPanel);
+            frame1.setVisible(true);
+
+            JLabel nameLabel = new JLabel("Chose which person to remove.");
+            nameLabel.setBounds(100, 5, 180, 25);
+            personPanel.add(nameLabel);
+
+            int j = 25;
+            for(String i:controller.getDBPerson().getPersonList().keySet()){
+                JButton nameButton = new JButton(i);
+                nameButton.setBounds(100,j,100,25);
+                personPanel.add(nameButton);
+                removePersonNameListener(personPanel, nameButton.getText(), nameButton);
+                j+=30;
+            }
+
+            JButton back = new JButton("Back");
+            back.setBounds(300, 180, 80, 25);
+            personPanel.add(back);
+            back.addActionListener(a ->
+            {
+                frame1.remove(personPanel);
+                frame1.add(panel1);
+                frame1.repaint();
+                isUpdated=false;
+            });
+        });
+    }
+
+    private void removePersonNameListener(JPanel panel1, String personName, JButton button) {
+        button.addActionListener(e->{
+            controller.removePerson(personName);
+            panel1.remove(button);
+            panel1.repaint();
+        });
+    }
+
     public void addPerson(Person person){
         this.person = person;
     }
@@ -101,12 +150,25 @@ public class RegistrationButtonPanel extends JPanel {
                 ticketLabel.setBounds(80, 5, 300, 20);
                 getNameTicketPanel.add(ticketLabel);
                 getNameTicketPanel.repaint();
+
+                JButton removeTicket = new JButton("Remove ticket");
+                removeTicket.setBounds(300, 140, 150, 25);
+                getNameTicketPanel.add(removeTicket);
+                removeTicket.addActionListener(a->{
+                    controller.removeTicket(personName,"DoesntMatter");
+                    getNameTicketPanel.remove(removeTicket);
+                    getNameTicketPanel.repaint();
+                    panel1.remove(button);
+                    panel1.repaint();
+                });
+
             } else {
                 JLabel questionLabel = new JLabel("Which ticket do you want to see?");
                 questionLabel.setBounds(80, 5, 300, 20);
                 getNameTicketPanel.add(questionLabel);
                 String temp = "";
                 int j = 25;
+                JButton removeTicket = new JButton("Remove ticket");
                 JButton back = new JButton("Back");
 
                 for (String i : controller.getDBTicket().getTicketList().get(personName).keySet()) {
@@ -116,6 +178,18 @@ public class RegistrationButtonPanel extends JPanel {
                     j+=30;
                     getNameTicketPanel.add(ticketButton);
                     ticketButton.addActionListener(a->{
+                        if(getNameTicketPanel.getComponentAt(300,140) != null) {
+                            removeTicket.setBounds(300, 140, 150, 25);
+                            getNameTicketPanel.add(removeTicket);
+                            removeTicket.addActionListener(z -> {
+                                System.out.println(i);
+                                controller.removeTicket(personName, i);
+                                getNameTicketPanel.remove(ticketButton);
+                                getNameTicketPanel.remove(removeTicket);
+                                getNameTicketPanel.repaint();
+                            });
+                        }
+
                         ticketLabel.setText(controller.getDBTicket().getTicket(personName, i).toString());
                         ticketLabel.setBounds(80, 180, 300, 20);
                         getNameTicketPanel.add(ticketLabel);
@@ -351,6 +425,10 @@ public class RegistrationButtonPanel extends JPanel {
                 String value = amount.getText();
                 if(SumGreaterThanAmountError){
                     System.out.println(SumGreaterThanAmountError);
+                    SumGreaterThanAmountError = false;
+                    index = 0;
+                    sum = 0.0;
+                    inputList.clear();
                     ticketPanel.removeAll();
                     ticketPanel.add(nameLabel);
                     ticketPanel.add(payerName);
@@ -439,6 +517,13 @@ public class RegistrationButtonPanel extends JPanel {
                         int j = 0;
                         for(Double i:inputList){
                             controller.changeValue(stringList[j], payerName, -i);
+                            System.out.println();
+                            System.out.println(inputList);
+                            System.out.println(stringList[j]);
+                            System.out.println(controller.getDBPerson().getPerson(stringList[j]).getSchuld(payerName));
+                            if(controller.getDBPerson().getPerson(stringList[j]).getSchuld(payerName)<=0.0001 && !Objects.equals(stringList[j], payerName)){ // De computer maakt soms kleine foutjes, en bedragen gaan nooit kleiner zijn dan 0
+                                System.out.println(controller.getDBPerson().getPerson(stringList[j]).getSchuldList().remove(payerName));
+                            }
                             j+=1;
                         }
                         System.out.println("ERROR: your input has exceeded the total amount");
@@ -456,11 +541,14 @@ public class RegistrationButtonPanel extends JPanel {
                     if(sum<amount && !SumGreaterThanAmountError){
 //                        controller.changeValue(stringList[index], payerName, -(amount-Double.parseDouble(waarde)));
                         sum +=Double.parseDouble(waarde);
-                    }else if(!SumGreaterThanAmountError){
+                    }else if(SumGreaterThanAmountError){
                         inputList.remove(inputList.size()-1);
                         int j = 0;
                         for(Double i:inputList){
                             controller.changeValue(stringList[j], payerName, -i);
+                            if(controller.getDBPerson().getPerson(stringList[j]).getSchuld(payerName)<=0.0001 && !Objects.equals(stringList[j], payerName)){ // De computer maakt soms kleine foutjes, en bedragen gaan nooit kleiner zijn dan 0
+                                System.out.println(controller.getDBPerson().getPerson(stringList[j]).getSchuldList().remove(payerName));
+                            }
                             j+=1;
                         }
                         System.out.println("ERROR: your input has exceeded the total amount");
@@ -485,10 +573,13 @@ public class RegistrationButtonPanel extends JPanel {
                 if(!Objects.equals(stringList[index], payerName)){
                     if(sum<amount && !SumGreaterThanAmountError){
                         controller.changeValue(stringList[index], payerName, (amount-sum));
-                    }else if(!SumGreaterThanAmountError){
+                    }else if(SumGreaterThanAmountError){
                         int j = 0;
                         for(Double i:inputList){
                             controller.changeValue(stringList[j], payerName, -i);
+                            if(controller.getDBPerson().getPerson(stringList[j]).getSchuld(payerName)<=0.0001 && !Objects.equals(stringList[j], payerName)){ // De computer maakt soms kleine foutjes, en bedragen gaan nooit kleiner zijn dan 0
+                                System.out.println(controller.getDBPerson().getPerson(stringList[j]).getSchuldList().remove(payerName));
+                            }
                             j+=1;
                         }
                         System.out.println("ERROR: your input has exceeded the total amount");
@@ -506,10 +597,13 @@ public class RegistrationButtonPanel extends JPanel {
                     if(sum<amount && !SumGreaterThanAmountError){
 //                        controller.changeValue(stringList[index], payerName, -(amount-(amount-sum)));
                         sum = 0.0;
-                    }else if(!SumGreaterThanAmountError){
+                    }else if(SumGreaterThanAmountError){
                         int j = 0;
                         for(Double i:inputList){
                             controller.changeValue(stringList[j], payerName, -i);
+                            if(controller.getDBPerson().getPerson(stringList[j]).getSchuld(payerName)<=0.0001 && !Objects.equals(stringList[j], payerName)){ // De computer maakt soms kleine foutjes, en bedragen gaan nooit kleiner zijn dan 0
+                                System.out.println(controller.getDBPerson().getPerson(stringList[j]).getSchuldList().remove(payerName));
+                            }
                             j+=1;
                         }
                         System.out.println("ERROR: your input has exceeded the total amount");
