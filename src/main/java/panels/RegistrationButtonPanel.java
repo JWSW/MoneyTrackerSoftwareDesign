@@ -24,7 +24,7 @@ public class RegistrationButtonPanel extends JPanel {
     private JButton removePerson;
     private JButton seeDepts;
     private JButton getTicket;
-    private boolean isEven;
+    private boolean isEven = false;
     private boolean isUpdated;
     private boolean payerPassed;
     private int index = 0;
@@ -396,6 +396,7 @@ public class RegistrationButtonPanel extends JPanel {
             JLabel label1 = new JLabel("Give the kind of ticket");
             JLabel label2 = new JLabel("(ex.: plane ticket, taxi ticket,...)");
             JButton back = new JButton("Back");
+            JLabel label3 = new JLabel("even split is:" + isEven);
             if(Objects.equals(ticketName, "other")){
                 label1.setBounds(290, 5, 160, 25);
                 ticketPanel.add(label1);
@@ -409,7 +410,11 @@ public class RegistrationButtonPanel extends JPanel {
                 evenSplit.setBounds(290, 95, 100, 25);
                 ticketPanel.add(evenSplit);
                 evenSplit.addActionListener(a -> {
-                    isEven = true;
+                    isEven = !isEven;
+                    label3.setText("even split is: " + isEven);
+                    label3.setBounds(290, 125, 180, 25);
+                    ticketPanel.add(label3);
+                    ticketPanel.repaint();
                 });
             }
 
@@ -472,6 +477,7 @@ public class RegistrationButtonPanel extends JPanel {
             ticketPanel.add(back);
             back.addActionListener(a ->
             {
+                isEven = false;
                 frame1.remove(ticketPanel);
                 frame1.add(panel1);
                 frame1.repaint();
