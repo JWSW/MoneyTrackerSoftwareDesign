@@ -60,7 +60,7 @@ public class RegistrationButtonPanel extends JPanel {
         addPerson = new JButton("Add person");
         addPerson.setBounds(185, 45, 100, 35);
 
-        seeDepts = new JButton("See depts");
+        seeDepts = new JButton("See debts");
         seeDepts.setBounds(290, 45, 100, 35);
 
         getTicket = new JButton("See tickets");
@@ -248,7 +248,7 @@ public class RegistrationButtonPanel extends JPanel {
             frame1.add(deptsPanel);
             frame1.setVisible(true);
 
-            JLabel headLabel = new JLabel("Here you see the depts per person.");
+            JLabel headLabel = new JLabel("Here you see the debts per person.");
             headLabel.setBounds(100, 5, 200, 20);
             deptsPanel.add(headLabel);
 
@@ -256,7 +256,7 @@ public class RegistrationButtonPanel extends JPanel {
 
             for(String name:controller.getDBPerson().getPersonList().keySet()){
                 for(String payerName:controller.getDBPerson().getPersonList().get(name).keySet()) {
-                    JLabel deptLabel = new JLabel(name + " is " + controller.getDBPerson().getPersonList().get(name).get(payerName) + " in dept to " + payerName);
+                    JLabel deptLabel = new JLabel(name + " is " + controller.getDBPerson().getPersonList().get(name).get(payerName) + " in debt to " + payerName);
                     deptLabel.setBounds(100, index, 180, 20);
                     deptsPanel.add(deptLabel);
                     index += 20;
@@ -340,12 +340,13 @@ public class RegistrationButtonPanel extends JPanel {
             JButton add = new JButton("Add person");
             add.setBounds(120, 60, 100, 25);
             personPanel.add(add);
+            JLabel feedback = new JLabel("Person " + person.getName() + " got added.");
             add.addActionListener(a ->
             {
                 String name = personText.getText();
                 controller.addPerson(name);
                 if(!isUpdated){
-                    JLabel feedback = new JLabel("Person " + person.getName() + " got added.");
+                    feedback.setText("Person " + person.getName() + " got added.");
                     feedback.setBounds(100, 90, 140, 25);
                     personJList.setBounds(100,120,personJList.getWidth(),personJList.getHeight());
                     personPanel.add(feedback);
@@ -427,7 +428,6 @@ public class RegistrationButtonPanel extends JPanel {
                 pName = payerName.getText();
                 String value = amount.getText();
                 if(SumGreaterThanAmountError){
-                    System.out.println(SumGreaterThanAmountError);
                     SumGreaterThanAmountError = false;
                     index = 0;
                     sum = 0.0;
@@ -453,7 +453,7 @@ public class RegistrationButtonPanel extends JPanel {
                     controller.addTicket(tName,pName, Double.valueOf(value), isEven);
                 }
                 if((!Objects.equals(ticketName, "taxi") && !Objects.equals(ticketName, "plane"))&&!isEven){
-                    JButton setDepts = new JButton("Set depts");
+                    JButton setDepts = new JButton("Set debts");
                     setDepts.setBounds(120, 160, 100, 25);
                     ticketPanel.add(setDepts);
                     setDepts.addActionListener(c ->
@@ -495,7 +495,7 @@ public class RegistrationButtonPanel extends JPanel {
         String[] stringList = controller.getDBPerson().getPersonList().keySet().toArray(new String[controller.getDBPerson().getPersonList().keySet().size()]);
 
         JLabel nameLabel;
-        nameLabel = new JLabel("Give the amount of dept for " + stringList[index]);
+        nameLabel = new JLabel("Give the amount of debt for " + stringList[index]);
         nameLabel.setBounds(100, 5, 220, 25);
         deptSetPanel.add(nameLabel);
 
@@ -511,12 +511,12 @@ public class RegistrationButtonPanel extends JPanel {
             String waarde = value.getText();
             inputList.add(Double.valueOf(waarde));
             JLabel errorLabel = null;
-            if(index<(controller.getDBPerson().getPersonList().keySet().size()-1)&&!SumGreaterThanAmountError){
-                if(!Objects.equals(stringList[index], payerName)){
+            if(index<(controller.getDBPerson().getPersonList().keySet().size()-1)){
+                if(!Objects.equals(stringList[index], payerName)&&!SumGreaterThanAmountError){
                     if(sum<amount){
                         controller.changeValue(stringList[index], payerName, Double.valueOf(waarde));
                         sum +=Double.parseDouble(waarde);
-                    }else {
+                    }else{
                         inputList.remove(inputList.size()-1);
                         int j = 0;
                         for(Double i:inputList){
@@ -545,7 +545,7 @@ public class RegistrationButtonPanel extends JPanel {
                     if(sum<amount && !SumGreaterThanAmountError){
 //                        controller.changeValue(stringList[index], payerName, -(amount-Double.parseDouble(waarde)));
                         sum +=Double.parseDouble(waarde);
-                    }else if(SumGreaterThanAmountError){
+                    }else{
                         inputList.remove(inputList.size()-1);
                         int j = 0;
                         for(Double i:inputList){
@@ -569,15 +569,15 @@ public class RegistrationButtonPanel extends JPanel {
                 }
                 index += 1;
                 deptSetPanel.remove(nameLabel);
-                nameLabel.setText("Give the amount of dept for " + stringList[index]);
+                nameLabel.setText("Give the amount of debt for " + stringList[index]);
                 deptSetPanel.add(nameLabel);
                 deptSetPanel.repaint();
             }
-            if(index==(controller.getDBPerson().getPersonList().keySet().size()-1)&&!SumGreaterThanAmountError){
+            if(index>=(controller.getDBPerson().getPersonList().keySet().size()-1)){
                 if(!Objects.equals(stringList[index], payerName)){
                     if(sum<amount && !SumGreaterThanAmountError){
                         controller.changeValue(stringList[index], payerName, (amount-sum));
-                    }else if(SumGreaterThanAmountError){
+                    }else{
                         int j = 0;
                         for(Double i:inputList){
                             controller.changeValue(stringList[j], payerName, -i);
@@ -599,9 +599,8 @@ public class RegistrationButtonPanel extends JPanel {
                     }
                 }else{
                     if(sum<amount && !SumGreaterThanAmountError){
-//                        controller.changeValue(stringList[index], payerName, -(amount-(amount-sum)));
                         sum = 0.0;
-                    }else if(SumGreaterThanAmountError){
+                    }else{
                         int j = 0;
                         for(Double i:inputList){
                             controller.changeValue(stringList[j], payerName, -i);
