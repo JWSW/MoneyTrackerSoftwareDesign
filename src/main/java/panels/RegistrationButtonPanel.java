@@ -182,7 +182,6 @@ public class RegistrationButtonPanel extends JPanel {
                             removeTicket.setBounds(300, 140, 150, 25);
                             getNameTicketPanel.add(removeTicket);
                             removeTicket.addActionListener(z -> {
-                                System.out.println(i);
                                 controller.removeTicket(personName, i);
                                 getNameTicketPanel.remove(ticketButton);
                                 getNameTicketPanel.remove(removeTicket);
@@ -349,7 +348,6 @@ public class RegistrationButtonPanel extends JPanel {
                     JLabel feedback = new JLabel("Person " + person.getName() + " got added.");
                     feedback.setBounds(100, 90, 140, 25);
                     personJList.setBounds(100,120,personJList.getWidth(),personJList.getHeight());
-//                    System.out.println(personJList);
                     personPanel.add(feedback);
                     personPanel.add(personJList);
                     personPanel.repaint();
