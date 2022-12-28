@@ -4,6 +4,9 @@ import Databases.DataPersons;
 import Databases.RegisterPerson;
 import Databases.RegisterTickets;
 import PersonData.Person;
+import TicketFactories.TaxiTicketFactory;
+import Tickets.TaxiTicket;
+import Tickets.Ticket;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,16 +58,21 @@ public class RegistrationController_UTest {
 
     @Test
     public void t_addTicket() throws Exception {
-        Field field1 = RegistrationController.class.getDeclaredField("dbPersons");
-        Field field2 = RegistrationController.class.getDeclaredField("dbTickets");
-        field1.setAccessible(true);
-        field2.setAccessible(true);
-        RegisterPerson mock_rp = Mockito.mock(RegisterPerson.class);
-        RegisterTickets mock_rt = Mockito.mock(RegisterTickets.class);
+        Field field = RegistrationController.class.getDeclaredField("taxiTicketFactory");
+        field.setAccessible(true);
+        String mock_type = "taxi";
+        String mock_name = "name";
+        double mock_amount = 50.0;
+        boolean mock_even = true;
+        TaxiTicketFactory mock_factory = Mockito.mock(TaxiTicketFactory.class);
+        Ticket mock_ticket = Mockito.mock(Ticket.class);
 
+        PowerMockito.whenNew(Ticket.class).withAnyArguments().thenReturn(mock_ticket);
         Controller controllerUnderTest = new RegistrationController();
 
-        field1.set(controllerUnderTest, mock_rp);
-        field2.set(controllerUnderTest, mock_rt);
+        field.set(controllerUnderTest, mock_factory);
+
+        controllerUnderTest.addTicket(mock_type, mock_name, mock_amount, mock_even);
+        Mockito.verify(mock_factory, Mockito.times(1)).addTicket(mock_name, mock_amount);
     }
 }
