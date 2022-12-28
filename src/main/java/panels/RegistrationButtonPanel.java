@@ -26,7 +26,6 @@ public class RegistrationButtonPanel extends JPanel {
     private JButton getTicket;
     private boolean isEven = false;
     private boolean isUpdated;
-    private boolean payerPassed;
     private int index = 0;
     private Double sum = 0.0;
     private String pName;
@@ -534,7 +533,6 @@ public class RegistrationButtonPanel extends JPanel {
                         errorLabel = new JLabel("ERROR: your input has exceeded the total amount");
                         errorLabel.setBounds(100, 155, 280, 25);
                         isUpdated=false;
-                        payerPassed = false;
                         SumGreaterThanAmountError = true;
                         panel1.add(errorLabel);
                         frame1.remove(deptSetPanel);
@@ -542,29 +540,8 @@ public class RegistrationButtonPanel extends JPanel {
                         frame1.repaint();
                     }
                 }else{
-                    if(sum<amount && !SumGreaterThanAmountError){
-//                        controller.changeValue(stringList[index], payerName, -(amount-Double.parseDouble(waarde)));
+                    if(sum<amount){
                         sum +=Double.parseDouble(waarde);
-                    }else if(SumGreaterThanAmountError){
-                        inputList.remove(inputList.size()-1);
-                        int j = 0;
-                        for(Double i:inputList){
-                            controller.changeValue(stringList[j], payerName, -i);
-                            if(controller.getDBPerson().getPerson(stringList[j]).getSchuld(payerName)<=0.0001 && !Objects.equals(stringList[j], payerName)){ // De computer maakt soms kleine foutjes, en bedragen gaan nooit kleiner zijn dan 0
-                                System.out.println(controller.getDBPerson().getPerson(stringList[j]).getSchuldList().remove(payerName));
-                            }
-                            j+=1;
-                        }
-                        System.out.println("ERROR: your input has exceeded the total amount");
-                        errorLabel = new JLabel("ERROR: your input has exceeded the total amount");
-                        errorLabel.setBounds(100, 155, 280, 25);
-                        isUpdated=false;
-                        payerPassed = false;
-                        SumGreaterThanAmountError = true;
-                        panel1.add(errorLabel);
-                        frame1.remove(deptSetPanel);
-                        frame1.add(panel1);
-                        frame1.repaint();
                     }
                 }
                 index += 1;
@@ -575,71 +552,26 @@ public class RegistrationButtonPanel extends JPanel {
             }
             if(index==(controller.getDBPerson().getPersonList().keySet().size()-1)&&!SumGreaterThanAmountError){
                 if(!Objects.equals(stringList[index], payerName)){
-                    if(sum<amount && !SumGreaterThanAmountError){
+                    if(sum<amount){
                         controller.changeValue(stringList[index], payerName, (amount-sum));
-                    }else if(SumGreaterThanAmountError){
-                        int j = 0;
-                        for(Double i:inputList){
-                            controller.changeValue(stringList[j], payerName, -i);
-                            if(controller.getDBPerson().getPerson(stringList[j]).getSchuld(payerName)<=0.0001 && !Objects.equals(stringList[j], payerName)){ // De computer maakt soms kleine foutjes, en bedragen gaan nooit kleiner zijn dan 0
-                                System.out.println(controller.getDBPerson().getPerson(stringList[j]).getSchuldList().remove(payerName));
-                            }
-                            j+=1;
-                        }
-                        System.out.println("ERROR: your input has exceeded the total amount");
-                        errorLabel = new JLabel("ERROR: your input has exceeded the total amount");
-                        errorLabel.setBounds(100, 155, 280, 25);
-                        isUpdated=false;
-                        payerPassed = false;
-                        SumGreaterThanAmountError = true;
-                        panel1.add(errorLabel);
-                        frame1.remove(deptSetPanel);
-                        frame1.add(panel1);
-                        frame1.repaint();
-                    }
-                }else{
-                    if(sum<amount && !SumGreaterThanAmountError){
-//                        controller.changeValue(stringList[index], payerName, -(amount-(amount-sum)));
-                        sum = 0.0;
-                    }else if(SumGreaterThanAmountError){
-                        int j = 0;
-                        for(Double i:inputList){
-                            controller.changeValue(stringList[j], payerName, -i);
-                            if(controller.getDBPerson().getPerson(stringList[j]).getSchuld(payerName)<=0.0001 && !Objects.equals(stringList[j], payerName)){ // De computer maakt soms kleine foutjes, en bedragen gaan nooit kleiner zijn dan 0
-                                System.out.println(controller.getDBPerson().getPerson(stringList[j]).getSchuldList().remove(payerName));
-                            }
-                            j+=1;
-                        }
-                        System.out.println("ERROR: your input has exceeded the total amount");
-                        errorLabel = new JLabel("ERROR: your input has exceeded the total amount");
-                        errorLabel.setBounds(100, 155, 280, 25);
-                        isUpdated=false;
-                        payerPassed = false;
-                        SumGreaterThanAmountError = true;
-                        panel1.add(errorLabel);
-                        frame1.remove(deptSetPanel);
-                        frame1.add(panel1);
-                        frame1.repaint();
                     }
                 }
+            }
                 index=0;
                 sum=0.0;
-                if(!SumGreaterThanAmountError) {
+                if (!SumGreaterThanAmountError) {
                     frame1.remove(deptSetPanel);
                     frame1.add(panel1);
                     frame1.repaint();
                     isUpdated = false;
-                    payerPassed = false;
                 }
-            }
+
             if(SumGreaterThanAmountError){
                 if(!Objects.equals(ticketName, "resto")){
                     controller.removeTicket(pName, tName);
                 }else{
                     controller.removeTicket(pName,"restaurant ticket");
                 }
-//                panel1.remove(errorLabel);
-//                SumGreaterThanAmountError = false;
             }
         });
 

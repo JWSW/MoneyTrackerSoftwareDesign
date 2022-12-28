@@ -35,8 +35,6 @@ public class Main
 
         dbPerson.addObserver(view);
         dbTicket.addObserver(view);
-        view.initialize();
-
 
     }
 

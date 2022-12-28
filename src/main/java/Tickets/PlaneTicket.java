@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class PlaneTicket extends Ticket{
-    private DataPersons dbPerson = RegisterPerson.getInstance();
+
     public PlaneTicket(String payerName, Double amount) {
         super("planeticket", payerName, amount);
         TicketSplit ticketSplit = new TicketSplit();
