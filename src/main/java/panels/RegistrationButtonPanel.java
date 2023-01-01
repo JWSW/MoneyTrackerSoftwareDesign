@@ -347,7 +347,7 @@ public class RegistrationButtonPanel extends JPanel {
 //                }
                 }else{
                     feedback.setText("This person is already added");
-                    feedback.setBounds(100, 90, 140, 25);
+                    feedback.setBounds(100, 90, 180, 25);
                     personPanel.add(feedback);
                     personPanel.repaint();
                 }
