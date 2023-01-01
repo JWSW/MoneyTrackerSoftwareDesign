@@ -15,9 +15,6 @@ class TicketSplit{
             if(!Objects.equals(i, payerName)){
                 dbPerson.changeValue(i,payerName, (amount / dbPerson.getPersonList().keySet().size()));
             }
-//                else{
-//                    dbPerson.changeValue(i, payerName, (-amount+(amount/dbPerson.getPersonList().keySet().size())));
-//                }
         }
     }
     public void unevenTicketSplit(){

@@ -13,7 +13,6 @@ import java.util.List;
 public class RegisterTickets extends DataTickets{
     private static RegisterTickets uniqueInstance;
     private HashMap<String,HashMap<String,Double>> db;
-    private ArrayList<Ticket> ticketList;
     private ArrayList<Observer> observerList = new ArrayList<>();
 
     private RegisterTickets() {
@@ -23,14 +22,14 @@ public class RegisterTickets extends DataTickets{
 
     @Override
     public void addTicket(Ticket ticket) {
-        HashMap<String,Double> tmp = new HashMap<String,Double>();
+        HashMap<String,Double> tmp = new HashMap<>();
         tmp.put(ticket.getTicketName(),ticket.getAmount());
         if(db.containsKey(ticket.getPayerName())){
             db.get(ticket.getPayerName()).put(ticket.getTicketName(), ticket.getAmount());
         }else{
             db.put(ticket.getPayerName(), tmp);
         }
-//        db.put(ticket.getPayerName(),tmp);
+
         for (Observer o: observerList){
             o.updateTicket();
         }

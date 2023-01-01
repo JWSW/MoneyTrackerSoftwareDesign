@@ -34,14 +34,9 @@ public class RegistrationButtonPanel extends JPanel {
     private ArrayList<Double> inputList = new ArrayList<>();
     private boolean SumGreaterThanAmountError;
     private JFrame frame1 = new JFrame("Moneykeeper");
-
-    // Get your controller in this private field
     private RegistrationController controller = new RegistrationController();
 
-    // For now, just make a new employee in this class via your factory.
-    // You can change this later on to a more unified way
 
-    // Get your controller in this class via the constructor
     public RegistrationButtonPanel()
     {
         frame1.setSize(500, 500);
@@ -72,16 +67,11 @@ public class RegistrationButtonPanel extends JPanel {
         personListModel = new DefaultListModel<>();
         personJList = new JList<>(personListModel);
 
-
-        // Create your temporary employee here
-//        this.employee = your factory creating an employee
         addTicketButtonActionListener(panel);
         addPersonButtonActionListener(panel);
         addseeDeptButtonActionListener(panel);
         getTicketButtonActionListener(panel);
         removePersonButtonActionListener(panel);
-
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 
         panel.add(label);
         panel.add(addTicket);
@@ -551,7 +541,6 @@ public class RegistrationButtonPanel extends JPanel {
                     }
                 }else{
                     if(sum<amount && !SumGreaterThanAmountError){
-//                        controller.changeValue(stringList[index], payerName, -(amount-Double.parseDouble(waarde)));
                         sum +=Double.parseDouble(waarde);
                     }else{
                         inputList.remove(inputList.size()-1);
@@ -645,8 +634,6 @@ public class RegistrationButtonPanel extends JPanel {
                 }else{
                     controller.removeTicket(pName,"restaurant ticket");
                 }
-//                panel1.remove(errorLabel);
-//                SumGreaterThanAmountError = false;
             }
         });
 

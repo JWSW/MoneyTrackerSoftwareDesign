@@ -18,22 +18,11 @@ import panels.RegistrationButtonPanel;
 
 public class GUI extends JFrame implements Observer{
 
-        // Get your controller in this private field
-        RegistrationController controller = new RegistrationController();
-
-        ListPanel panel;
-        RegistrationButtonPanel panels = new RegistrationButtonPanel();
+    RegistrationButtonPanel panels = new RegistrationButtonPanel();
 
         public GUI()
         {
             super("Moneytracker");
-        }
-
-        public void initialize()
-        {
-
-//             Pass the controller to the ButtonPanel
-//            panels = new RegistrationButtonPanel();
         }
 
 
