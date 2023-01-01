@@ -344,16 +344,24 @@ public class RegistrationButtonPanel extends JPanel {
             add.addActionListener(a ->
             {
                 String name = personText.getText();
-                controller.addPerson(name);
-                if(!isUpdated){
-                    feedback.setText("Person " + person.getName() + " got added.");
+                if(!controller.getDBPerson().getPersonList().containsKey(name)){
+                    controller.addPerson(name);
+                    feedback.setText("Person " + name + " got added.");
                     feedback.setBounds(100, 90, 140, 25);
-                    personJList.setBounds(100,120,personJList.getWidth(),personJList.getHeight());
                     personPanel.add(feedback);
+//                if(!isUpdated){
+                    personJList.setBounds(100,120,personJList.getWidth(),personJList.getHeight());
                     personPanel.add(personJList);
                     personPanel.repaint();
                     isUpdated=true;
+//                }
+                }else{
+                    feedback.setText("This person is already added");
+                    feedback.setBounds(100, 90, 140, 25);
+                    personPanel.add(feedback);
+                    personPanel.repaint();
                 }
+
             });
             JButton back = new JButton("Back");
             back.setBounds(300, 180, 80, 25);
